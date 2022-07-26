@@ -20,10 +20,12 @@ class Adduser extends Component{
             [e.target.name]: e.target.value
         });
     }
-    
-    saveUser = async (e) => {
-        e.preventDefault();
-        const res = await axios.post('http://localhost:8000/api/add-user', this.state);
+    /*onFinish = (values) => {
+        console.log('Success:', values);
+      };*/
+    onFinish = async (e) => {
+        //e.preventDefault();
+        const res = await axios.post('http://localhost:8000/api/add-users', this.state);
         if(res.data.status === 200)
         {
             console.log(res.data.message);
@@ -41,7 +43,7 @@ class Adduser extends Component{
         return(
             <div className="App">
                 <header className="App-header">
-                    <Form onSubmit={this.saveUser} >
+                    <Form onFinish={this.onFinish} >
                         <Form.Item label="Name" name="name">
                             <Input type="text" placeholder="Name" className="form-control" value={this.state.name} onChange={this.handleInput}></Input>
                         </Form.Item>
@@ -61,7 +63,7 @@ class Adduser extends Component{
                             <Input type="text" placeholder="role" className="form-control" value={this.state.role} onChange={this.handleInput}></Input>
                         </Form.Item>
                         <Form.Item>
-                            <Button type="submit" value="insert" className="btn btn-primary mt-5">Add</Button>
+                            <Button type="primary" htmlType="submit" value="insert" className="btn btn-primary mt-5">Add</Button>
                         </Form.Item>
                     </Form>
                 </header>

@@ -20,7 +20,7 @@ const Users = () => {
 
     const loadData = async()=>{
         setLoading(true);
-        const response=await axios.get("http://localhost:8000/api/users")
+        const response=await axios.get("http://localhost:8000/api/users");
         setGridData(response.data);
         setLoading(false);
     }
@@ -34,6 +34,7 @@ const Users = () => {
         key: item.id,
         message: isEmpty(body) ? item.message : body,
     }));
+    
     const columns = [
             {
             title: "ID",
@@ -43,21 +44,21 @@ const Users = () => {
             title: "Name",
             dataIndex: "name",
             align: "center",
-            key: 'name',
+            
             editTable: true
             },
             {
             title:"Email",
             dataIndex: "email",
             align: "center",
-            key: 'email',
+            
             editTable: true
             },
             {
             title:"Role",
             dataIndex: "role",
             align: "center",
-            key: 'role',
+            
             editTable: true
             },
     ];
@@ -72,7 +73,7 @@ const Users = () => {
                    dataSource={[modifiedData]}
                    columns={columns}
                    bordened
-                   loading={loading}
+                   //loading={loading}
                    >
                    </Table> 
                 </header>
