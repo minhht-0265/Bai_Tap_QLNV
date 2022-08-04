@@ -8,21 +8,21 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import { useNavigate, NavLink } from 'react-router-dom';
 
+const initialState = {
+    email: '',
+    password: '',
+}
 function Login(){
     const navigate = useNavigate();
-    const [loginInput, setLogin] = useState({
-         email: '',
-         password: '',
-         error_list: [],
-    });
+    const [loginInput, setLogin] = useState(initialState)
     const handleInput = (e) =>{
+        console.log(e.target)
         e.persist();
         setLogin({...loginInput, [e.target.name]: e.target.value});
     }
 
-    const loginSubmit = (e) => {
-        e.preventDefault();
-
+    const onFinish = (e) => {
+       // e.preventDefault();console.log(e.target)
         const data = {
             email: loginInput.email,
             password: loginInput.password,
@@ -49,43 +49,25 @@ function Login(){
     }
 
     return(
-     <div>
-         <Navbar />
-         <div className="container py-5">
-             <div className="row justify-content-center">
-                 <div className= "col-md-6">
-                     <div className="card">
-                        <div className="card-header">
-                           <h4>Login</h4>
-                        </div>
-                        <div className="card-body">
-                            <form onSubmit={loginSubmit}>
-                                
-                                <div className="form-group mb-3">
-                                    <label>Email ID</label>
-                                    <input type="email" name="email" onChange={handleInput} value={loginInput.email} className="form-control" />
-                                    <span>{loginInput.error_list.email}</span>                               
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label>Password</label>
-                                    <input type="password" name="password" onChange={handleInput} value={loginInput.password} className="form-control" />
-                                    <span>{loginInput.error_list.password}</span>
-                                </div>
-                                
-                                <div className="form-group mb-3">
-                                    <button type="submit" className="btn btn-primary">Login</button>
-                                </div>
-                                
-                            </form>
-                        </div>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </div>
+        
+        
+            <Form onFinish={onFinish}>
+            <Form.Item name="email" label="Email">
+                <Input placeholder="email" name="email" onChange={handleInput} value={loginInput.email} className="form-control"/>
+            </Form.Item>
+            <Form.Item name="password" label="password">
+                <Input placeholder="password" name="password" onChange={handleInput} value={loginInput.password} className="form-control"/>
+            </Form.Item>
+            <Form.Item >
+               <Button type="primary" htmlType="submit">
+                   Login
+               </Button>
+            </Form.Item>
+            </Form>
+        
+    
     );
+}
 
-
-};
 
 export default Login;

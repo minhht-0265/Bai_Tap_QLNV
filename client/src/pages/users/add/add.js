@@ -1,11 +1,5 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { useState } from 'react'
-import {Table, Popconfirm, Button, Space, Form, Input} from "antd";
-import axios from "axios";
-
-
-
-
 const initialState = {
     name: '',
     email: '',
@@ -14,19 +8,29 @@ const initialState = {
     address: '',
     role: '',
 }
- function Add() {
+function add() {
     const[state,setState]=useState(initialState)
     const handleInput = (e) => {
         console.log(e.target)
         setState({...state,[e.target.name]:e.target.value})
     }
-    
     const onFinish = async (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         
-        const res = await axios.post('http://localhost:8000/api/add-user', state);
-       
-        
+        // const res = await axios.post('http://localhost:8000/api/add-users', state);
+        // if(res.data.status === 200)
+        // {
+        //     console.log(res.data.message);
+        //     this. setState={
+        //         name: '',
+        //         email: '',
+        //         password: '',
+        //         phone_number: '',
+        //         address: '',
+        //         role: '',
+        //        };
+        // }
+        console.log(state);
     }
     return (
         <div className="App">
@@ -59,4 +63,4 @@ const initialState = {
     )
 }
 
-export default Add;
+export default add

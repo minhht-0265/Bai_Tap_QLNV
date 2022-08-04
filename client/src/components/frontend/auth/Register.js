@@ -1,26 +1,25 @@
+import { Button, Checkbox, Form, Input, Select } from 'antd';
 import React, {useState} from 'react';
 import Navbar from '../../../layouts/frontend/Navbar';
 import swal from 'sweetalert';
 import { useNavigate,NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { Typography } from 'antd';
+const initialState = {
+    name: '',
+    email: '',
+    password: '',
+}
 function Register(){
     const navigate = useNavigate();
-    const [registerInput, setRegister] = useState({
-        name: '',
-        email: '',
-        password: '',
-        error_list: [],
-    });
-
+    const [registerInput, setRegister] = useState(initialState)
     const handleInput = (e) =>{
+        console.log(e.target)
         e.persist();
         setRegister({...registerInput,[e.target.name]:e.target.value });
     }
-
-    const registerSubmit = (e) => {
-        e.preventDefault();
-
+    const onFinish = (e) => {
+        //e.preventDefault();
         const data = {
             name: registerInput.name,
             email: registerInput.email,
@@ -43,50 +42,27 @@ function Register(){
             });
         });
     }
-
-    return(
-      <div>
-          <Navbar/>
-         <div className="container py-5">
-             <div className="row justify-content-center">
-                 <div className= "col-md-6">
-                     <div className="card">
-                        <div className="card-header">
-                           <h4>Register</h4>
-                        </div>
-                        <div className="card-body">
-                            <form onSubmit={registerSubmit}>
-                                <div className="form-group mb-3">
-                                    <label>Full Name</label>
-                                    <input type="" name="name" onChange={handleInput} value={registerInput.name} className="form-control" />
-                                    <span>{registerInput.error_list.name} </span>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label>Email ID</label>
-                                    <input type="" name="email" onChange={handleInput} value={registerInput.email} className="form-control" />
-                                    <span>{registerInput.error_list.email} </span>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label>Password</label>
-                                    <input type="" name="password" onChange={handleInput} value={registerInput.password} className="form-control" />
-                                    <span>{registerInput.error_list.password} </span>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <button type="submit" className="btn btn-primary">Register</button>
-                                </div>
-                                <Typography> Already a member ?
-                                    <NavLink to="/login">
-                                        <span> Login</span>
-                                    </NavLink>
-                                </Typography>
-                            </form>
-                        </div>
-                     </div>
-                 </div>
-             </div>
-         </div>
-      </div>
-    ); 
+ return(
+    <div className='App'>
+        <header className="App-header">
+            <Form onFinish={onFinish}>
+            <Form.Item name="name" label="Name" >
+                <Input placeholder="name" name="name" onChange={handleInput} value={registerInput.name} className="form-control"/>
+            </Form.Item>
+            <Form.Item name="email" label="Email">
+                <Input placeholder="email" name="email" onChange={handleInput} value={registerInput.email} className="form-control"/>
+            </Form.Item>
+            <Form.Item name="password" label="password">
+                <Input placeholder="password" name="password" onChange={handleInput} value={registerInput.password} className="form-control"/>
+            </Form.Item>
+            <Form.Item >
+               <Button type="primary" htmlType="submit">
+                   Register
+               </Button>
+            </Form.Item>
+            </Form>
+        </header>
+    </div>
+ );
 }
-
 export default Register;
